@@ -32,6 +32,7 @@ router.post(
 
     try {
       let user = await User.findOne({ email });
+
       if (user) {
         return res
           .status(400)
@@ -41,7 +42,7 @@ router.post(
       const avatar = gravatar.url(email, {
         s: "200",
         r: "pg",
-        d: "nm"
+        d: "mm"
       });
 
       user = new User({
@@ -58,7 +59,9 @@ router.post(
       await user.save();
 
       const payload = {
-        user: user.id
+        user: {
+          id: user.id
+        }
       };
 
       jwt.sign(
