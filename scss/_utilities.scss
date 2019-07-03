@@ -33,6 +33,10 @@
   color: $primary-color;
 }
 
+.round-img {
+  border-radius: 50%;
+}
+
 //BACKGROUNDS
 .bg {
   &-primary {
@@ -98,6 +102,30 @@
   &:hover {
     background: lighten($dark-color, 20%);
     color: #fff;
+  }
+}
+
+//ALERTS
+
+.alert {
+  padding: 0.8rem;
+  margin: 1rem;
+  width: 50%;
+  opacity: 0.8;
+  background: $light-color;
+  color: #333;
+
+  &.alert-primary {
+    @include set-background($primary-color);
+  }
+  &.alert-dark {
+    @include set-background($dark-color);
+  }
+  &.alert-success {
+    @include set-background($success-color);
+  }
+  &.alert-danger {
+    @include set-background($danger-color);
   }
 }
 
