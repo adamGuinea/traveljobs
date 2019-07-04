@@ -1,4 +1,4 @@
-$primary-color: #637fff;
+$primary-color: #cc0042;
 $dark-color: #343a40;
 $light-color: #f4f4f4;
 $danger-color: #dc3545;
@@ -7,7 +7,7 @@ $max-width: 1100px;
 
 //set text color based on background
 @function set-text-color($color) {
-  @if (lightness($color) > 50) {
+  @if (lightness($color) > 60) {
     @return #333;
   } @else {
     @return #fff;
@@ -31,7 +31,7 @@ $spaceamounts: (1, 2, 3, 4, 5);
   }
   //vertical margin
   .my-#{$space} {
-    margin: #{$space} 0;
+    margin: #{$space}rem 0;
   }
 
   // all around padding
@@ -40,6 +40,6 @@ $spaceamounts: (1, 2, 3, 4, 5);
   }
   //vertical padding
   .py-#{$space} {
-    padding: #{$space} 0;
+    padding: #{$space}rem 0;
   }
 }

@@ -25,7 +25,7 @@
 }
 
 .lead {
-  font-size: 1.5rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
 }
 
@@ -35,6 +35,12 @@
 
 .round-img {
   border-radius: 50%;
+}
+
+.line {
+  height: 1px;
+  background: #ccc;
+  margin: 1.5rem 0;
 }
 
 //BACKGROUNDS
@@ -125,6 +131,30 @@
     @include set-background($success-color);
   }
   &.alert-danger {
+    @include set-background($danger-color);
+  }
+}
+
+//BADGES
+
+.badge {
+  font-size: 1.2rem;
+  padding: 0.2rem;
+  text-align: center;
+  margin: 0.5rem;
+  background: $light-color;
+  color: #333;
+
+  &.badge-primary {
+    @include set-background($primary-color);
+  }
+  &.badge-dark {
+    @include set-background($dark-color);
+  }
+  &.badge-success {
+    @include set-background($success-color);
+  }
+  &.badge-danger {
     @include set-background($danger-color);
   }
 }
