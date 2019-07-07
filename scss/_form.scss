@@ -19,4 +19,17 @@
     font-size: 1.6rem;
     border: 1px solid #ccc;
   }
+
+  input[type="submit"] {
+    font: inherit;
+  }
+
+  .social-input {
+    display: flex;
+
+    i {
+      padding: 0.1rem;
+      width: 4rem;
+    }
+  }
 }
