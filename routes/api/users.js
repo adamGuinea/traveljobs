@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
-const config = require("config");
 const jwt = require("jsonwebtoken");
+const config = require("config");
 const { check, validationResult } = require("express-validator/check");
+
 const User = require("../../models/User");
 
 // POST to api/users
@@ -16,7 +17,7 @@ router.post(
     check("name", "Name is required")
       .not()
       .isEmpty(),
-    check("email", "Looks like you didn't enter a valid email ").isEmail(),
+    check("email", "Looks like you didn't enter a valid email").isEmail(),
     check(
       "password",
       "Please enter a password with 8 or more characters"
