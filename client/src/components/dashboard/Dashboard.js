@@ -4,11 +4,14 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../layout/Spinner";
 import DashboardActions from "./DashboardActions";
-import { getCurrentProfile } from "../../actions/profile";
+import Experience from "./Experience";
+import Education from "./Education";
+import { getCurrentProfile, deleteAccount } from "../../actions/profile";
 
 const Dashboard = ({
   getCurrentProfile,
   auth: { user },
+  deleteAccount,
   profile: { profile, loading }
 }) => {
   useEffect(() => {
@@ -26,6 +29,8 @@ const Dashboard = ({
       {profile !== null ? (
         <Fragment>
           <DashboardActions />
+          <Experience experience={profile.experience} />
+          <Education education={profile.education} />
         </Fragment>
       ) : (
         <Fragment>
@@ -36,58 +41,8 @@ const Dashboard = ({
         </Fragment>
       )}
 
-      <h2 className='my-2'>Experience Credentials</h2>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Company</th>
-            <th className='hide-sm'>Title</th>
-            <th className='hide-sm'>Years</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Gravatar</td>
-            <td className='hide-sm'>Front End Developer</td>
-            <td className='hide-sm'>Jan 2018 - Current</td>
-            <td>
-              <button className='btn btn-danger'>Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td>Properly</td>
-            <td className='hide-sm'>Designer</td>
-            <td className='hide-sm'>Feb 2015 - Jan 2018</td>
-            <td>
-              <button className='btn btn-danger'>Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <h2 className='my-2'>Education Credentials</h2>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>School</th>
-            <th className='hide-sm'>Degree</th>
-            <th className='hide-sm'>Years</th>
-            <th />
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Monash</td>
-            <td className='hide-sm'>Computer Science</td>
-            <td className='hide-sm'>Sep 2014 - Jun 2017</td>
-            <td>
-              <button className='btn btn-danger'>Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
       <div className='my-2'>
-        <button className='btn btn-danger'>
+        <button className='btn btn-danger' onClick={() => deleteAccount()}>
           <i className='fas fa-user-minus' /> Delete My Account
         </button>
       </div>
@@ -97,6 +52,7 @@ const Dashboard = ({
 
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
 };
@@ -108,5 +64,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, deleteAccount }
 )(Dashboard);
