@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProfile, getCurrentProfile } from "../../actions/profile";
-import PropTypes from "prop-types";
 
 const EditProfile = ({
   profile: { profile, loading },
@@ -45,7 +45,7 @@ const EditProfile = ({
       youtube: loading || !profile.social ? "" : profile.social.youtube,
       instagram: loading || !profile.social ? "" : profile.social.instagram
     });
-  }, [getCurrentProfile, loading]);
+  }, [loading, getCurrentProfile]);
 
   const {
     company,
@@ -72,11 +72,11 @@ const EditProfile = ({
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Create your profile</h1>
+      <h1 className='large text-primary'>Edit your profile</h1>
       <p className='lead'>
-        <i className='fas fa-user' /> Let's make your profile stand out
+        <i className='fas fa-user' /> Add some changes to your profile
       </p>
-      <small>* = required fields</small>
+      <small>* = required field</small>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <select name='status' value={status} onChange={e => onChange(e)}>
@@ -90,7 +90,9 @@ const EditProfile = ({
             <option value='Intern'>Intern</option>
             <option value='Other'>Other</option>
           </select>
-          <small className='form-text'>Tell us where you're at</small>
+          <small className='form-text'>
+            Tell us where you're at in your career
+          </small>
         </div>
         <div className='form-group'>
           <input
