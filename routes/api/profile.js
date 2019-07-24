@@ -84,21 +84,11 @@ router.post(
     if (instagram) profileFields.social.instagram = instagram;
 
     try {
-      let profile = await Profile.findOne({ user: req.user.id });
-
-      if (profile) {
-        profile = await Profile.findOneAndUpdate(
-          { user: req.user.id },
-          { $set: profileFields },
-          { new: true }
-        );
-
-        return res.json(profile);
-      }
-
-      profile = new Profile(profileFields);
-
-      await profile.save();
+      let profile = await Profile.findOneAndUpdate(
+        { user: req.user.id },
+        { $set: profileFields },
+        { new: true, upsert: true }
+      );
       res.json(profile);
     } catch (err) {
       console.error(err.message);
@@ -115,8 +105,8 @@ router.get("/", async (req, res) => {
   try {
     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
     res.json(profiles);
-  } catch (error) {
-    console.error(error.message);
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -132,9 +122,10 @@ router.get("/user/:user_id", async (req, res) => {
     }).populate("user", ["name", "avatar"]);
 
     if (!profile) return res.status(400).json({ msg: "Profile not found" });
+
     res.json(profile);
-  } catch (error) {
-    console.error(error.message);
+  } catch (err) {
+    console.error(err.message);
     if (err.kind == "ObjectId") {
       return res.status(400).json({ msg: "Profile not found" });
     }
@@ -152,8 +143,8 @@ router.delete("/", auth, async (req, res) => {
     await Profile.findOneAndRemove({ user: req.user.id });
     await User.findOneAndRemove({ _id: req.user.id });
     res.json({ msg: "User deleted" });
-  } catch (error) {
-    console.error(error.message);
+  } catch (err) {
+    console.error(err.message);
     res.status(500).send("Server Error");
   }
 });
@@ -209,8 +200,8 @@ router.put(
       profile.experience.unshift(newExp);
       await profile.save();
       res.json(profile);
-    } catch (error) {
-      console.error(error.message);
+    } catch (err) {
+      console.error(err.message);
       res.status(500).send("Server Error");
     }
   }

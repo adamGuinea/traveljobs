@@ -31,7 +31,8 @@ const ProfileSchema = new mongoose.Schema({
   experience: [
     {
       title: {
-        type: String
+        type: String,
+        required: true
       },
       company: {
         type: String,
@@ -41,7 +42,8 @@ const ProfileSchema = new mongoose.Schema({
         type: String
       },
       from: {
-        type: Date
+        type: Date,
+        required: true
       },
       to: {
         type: Date
