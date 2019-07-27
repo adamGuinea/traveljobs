@@ -372,7 +372,8 @@ img {
         flex-basis: 20%; }
 
 .post-form-header {
-  padding: 0.7rem; }
+  padding: 0.7rem;
+  width: 50%; }
 
 .post {
   display: grid;
@@ -421,5 +422,7 @@ img {
     .post a,
     .post button {
       padding: 0.3rem 0.4rem; }
+  .post-form-header {
+    width: 100%; }
   .form textarea {
     width: 100%; } }
