@@ -19,6 +19,10 @@
     font-size: 1.8rem;
   }
 
+  .alert {
+    width: 100%;
+  }
+
   //NAVBAR
   .navbar {
     display: block;
@@ -64,6 +68,8 @@
       flex-direction: column;
     }
   }
+
+  //POSTS
 
   .post {
     grid-template-columns: 1fr;

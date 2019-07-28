@@ -82,7 +82,7 @@
   margin-bottom: 1rem; }
 
 .text-primary {
-  color: #cc0042; }
+  color: #4b58db; }
 
 .round-img {
   border-radius: 50%; }
@@ -93,7 +93,7 @@
   margin: 1.5rem 0; }
 
 .bg-primary {
-  background-color: #cc0042;
+  background-color: #4b58db;
   color: #fff; }
 
 .bg-light {
@@ -130,10 +130,10 @@
   outline: none;
   transition: all 0.2s ease-in; }
   .btn.btn-primary {
-    background-color: #cc0042;
+    background-color: #4b58db;
     color: #fff; }
     .btn.btn-primary:hover {
-      background: #ff0053; }
+      background: #767fe4; }
   .btn.btn-dark {
     background-color: #343a40;
     color: #fff; }
@@ -161,7 +161,7 @@
   background: #f4f4f4;
   color: #333; }
   .alert.alert-primary {
-    background-color: #cc0042;
+    background-color: #4b58db;
     color: #fff; }
   .alert.alert-dark {
     background-color: #343a40;
@@ -181,7 +181,7 @@
   background: #f4f4f4;
   color: #333; }
   .badge.badge-primary {
-    background-color: #cc0042;
+    background-color: #4b58db;
     color: #fff; }
   .badge.badge-dark {
     background-color: #343a40;
@@ -267,7 +267,7 @@ body {
 
 a {
   text-decoration: none;
-  color: #cc0042; }
+  color: #4b58db; }
 
 ul {
   list-style: none; }
@@ -284,7 +284,7 @@ img {
   z-index: 1;
   width: 100%;
   top: 0;
-  border-bottom: solid 1px #cc0042;
+  border-bottom: solid 1px #4b58db;
   opacity: 0.87; }
   .navbar ul {
     display: flex; }
@@ -293,7 +293,7 @@ img {
     padding: 0.45rem;
     margin: 0 0.25rem; }
     .navbar a:hover {
-      color: #cc0042; }
+      color: #4b58db; }
 
 .landing {
   position: relative;
@@ -354,9 +354,9 @@ img {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
     border-bottom: #ccc 1px dotted; }
-  .profile-grid .profile-exp:last-child,
-  .profile-grid .profile-edu:last-child {
-    border: green; }
+    .profile-grid .profile-exp > div:last-child,
+    .profile-grid .profile-edu > div:last-child {
+      border: none; }
   .profile-grid .profile-exp p,
   .profile-grid .profile-edu p {
     margin: 0.5rem 0; }
@@ -372,7 +372,8 @@ img {
         flex-basis: 20%; }
 
 .post-form-header {
-  padding: 0.7rem; }
+  padding: 0.7rem;
+  width: 50%; }
 
 .post {
   display: grid;
@@ -395,6 +396,8 @@ img {
     font-size: 2.2rem; }
   .lead {
     font-size: 1.8rem; }
+  .alert {
+    width: 100%; }
   .navbar {
     display: block;
     text-align: center; }
@@ -421,5 +424,7 @@ img {
     .post a,
     .post button {
       padding: 0.3rem 0.4rem; }
+  .post-form-header {
+    width: 100%; }
   .form textarea {
     width: 100%; } }

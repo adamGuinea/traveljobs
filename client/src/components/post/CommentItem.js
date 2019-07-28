@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import PropTypes from "prop-types";
@@ -9,7 +9,7 @@ const CommentItem = ({
   postId,
   comment: { _id, text, name, avatar, user, date },
   auth,
-  deleteComment
+  removeComment
 }) => (
   <div className='post bg-white p-1 my-1'>
     <div>
@@ -25,7 +25,7 @@ const CommentItem = ({
       </p>
       {!auth.loading && user === auth.user._id && (
         <button
-          onClick={e => removeComment(postId, _id)}
+          onClick={() => removeComment(postId, _id)}
           type='button'
           className='btn btn-danger'
         >
