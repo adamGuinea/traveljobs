@@ -45,7 +45,7 @@ const EditProfile = ({
       youtube: loading || !profile.social ? "" : profile.social.youtube,
       instagram: loading || !profile.social ? "" : profile.social.instagram
     });
-  }, [getCurrentProfile]);
+  }, [loading, getCurrentProfile]);
 
   const {
     company,
@@ -80,7 +80,7 @@ const EditProfile = ({
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <select name='status' value={status} onChange={e => onChange(e)}>
-            <option value='0'>* Select professional status</option>
+            <option value=''>* Select professional status</option>
             <option value='Developer'>Developer</option>
             <option value='Junior Developer'>Junior Developer</option>
             <option value='Senior Developer'>Senior Developer</option>
@@ -91,7 +91,7 @@ const EditProfile = ({
             <option value='Other'>Other</option>
           </select>
           <small className='form-text'>
-            Tell us where you're at in your career
+            Tell us where you are in your career
           </small>
         </div>
         <div className='form-group'>
