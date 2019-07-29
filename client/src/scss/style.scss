@@ -109,6 +109,15 @@ img {
   .profile-top {
     grid-area: top;
     display: flex;
+    clip-path: polygon(
+      0% 0%,
+      100% 0%,
+      100% 96%,
+      96% 96%,
+      96% 100%,
+      88% 96%,
+      0 96%
+    );
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -198,6 +207,27 @@ img {
 
   img {
     width: 15rem;
+  }
+
+  .shape {
+    width: 15rem;
+    height: 15rem;
+    float: left;
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+    transform: translateX(-3rem) skewX(12deg);
+    position: relative;
+  }
+
+  button {
+    border-radius: 5px 20px 5px;
+
+    .fa-comments,
+    .comment-count {
+      color: #fff;
+    }
   }
 }
 
