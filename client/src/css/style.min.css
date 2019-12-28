@@ -300,6 +300,10 @@ body {
 
 .form-group {
   margin: 1.2rem 0; }
+  .form-group h4 {
+    margin-bottom: .5rem;
+    font-size: 1.9rem;
+    color: #101d2c; }
 
 .form-text {
   display: block;
@@ -451,6 +455,8 @@ body {
   grid-template-columns: minmax(min-content, max-content);
   grid-row-gap: 1.5rem;
   justify-content: center; }
+  .header a {
+    text-align: center; }
   @media only screen and (max-width: 50em) {
     .header {
       grid-column: 1 / -1; } }

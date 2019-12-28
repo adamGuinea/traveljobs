@@ -13,7 +13,6 @@ import Logo1 from "../../img/logo-bbc.png";
 import Logo2 from "../../img/logo-bi.png";
 import Logo3 from "../../img/logo-forbes.png";
 import Logo4 from "../../img/logo-techcrunch.png";
-import Navbar from "./Navbar";
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -22,13 +21,7 @@ const Landing = ({ isAuthenticated }) => {
 
   return (
     <div className='landing-container'>
-      {/* <div className='sidebar'>
-        <button className='nav-btn' />
-      </div> */}
-      {/* <Navbar /> */}
       <header className='header'>
-        {/* <div className='header__logo heading-1'>Unreal Realty</div> */}
-        <h3 className='heading-3'>Your own home:</h3>
         <h1 className='heading-1'>The ultimate escape</h1>
         <Link to='/register'>
           <button className='button header__btn'>Sign up</button>
@@ -421,7 +414,7 @@ const Landing = ({ isAuthenticated }) => {
             </a>
           </li>
         </ul>
-        <p className='copyright'>&copy; Unreal Realty</p>
+        <p className='copyright'>&copy; TravelJobs</p>
       </footer>
     </div>
   );

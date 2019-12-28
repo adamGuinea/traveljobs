@@ -79,6 +79,9 @@ const EditProfile = ({
       <small>* = required field</small>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
+          <h4>
+            Job Description
+          </h4>
           <select name='status' value={status} onChange={e => onChange(e)}>
             <option value=''>* Select professional status</option>
             <option value='Developer'>Developer</option>
@@ -95,6 +98,9 @@ const EditProfile = ({
           </small>
         </div>
         <div className='form-group'>
+          <h4>
+            Company
+          </h4>
           <input
             type='text'
             placeholder='Company'
@@ -107,6 +113,9 @@ const EditProfile = ({
           </small>
         </div>
         <div className='form-group'>
+          <h4>
+            Portfolio Website
+          </h4>
           <input
             type='text'
             placeholder='Website'
@@ -119,6 +128,9 @@ const EditProfile = ({
           </small>
         </div>
         <div className='form-group'>
+          <h4>
+            Location
+          </h4>
           <input
             type='text'
             placeholder='Location'
@@ -131,6 +143,9 @@ const EditProfile = ({
           </small>
         </div>
         <div className='form-group'>
+          <h4>
+            Technologies
+          </h4>
           <input
             type='text'
             placeholder='* Skills'
@@ -143,6 +158,9 @@ const EditProfile = ({
           </small>
         </div>
         <div className='form-group'>
+          <h4>
+            GitHub username
+          </h4>
           <input
             type='text'
             placeholder='Github username'
@@ -155,8 +173,12 @@ const EditProfile = ({
           </small>
         </div>
         <div className='form-group'>
+          <h4>
+            Bio
+          </h4>
           <textarea
             placeholder='Short bio'
+            rows={10}
             name='bio'
             value={bio}
             onChange={e => onChange(e)}
