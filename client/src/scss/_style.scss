@@ -1,0 +1,120 @@
+a {
+  text-decoration: none;
+  color: $primary-color;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+}
+
+//NAVBAR
+.navbar {
+  background-color: transparent;
+  grid-column: sidebar-start / sidebar-end;
+  grid-row: 1 / -1;
+  padding: 1rem;
+  font-size: 2.2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (max-width: $bp-large) {
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  h1 {
+    width: 100%;
+  }
+
+  ul {
+    display: flex;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    color: $primary-color;
+    padding: 0.45rem;
+    margin: 0 0.25rem;
+
+    i {
+      padding-right: .5rem;
+    }
+
+    &:hover {
+      color: $primary-color-light;
+    }
+  }
+}
+
+//LANDING
+
+.landing {
+  position: relative;
+  background: url("../img/person1.jpg") no-repeat center center/cover;
+  height: 100vh;
+
+  &-inner {
+    color: #fff;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+//POSTS PAGE
+.post-form-header {
+  padding: 0.7rem;
+  width: 50%;
+}
+
+.post {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-gap: 2.2rem;
+  align-items: center;
+
+  & > div:first-child {
+    text-align: center;
+  }
+
+  img {
+    width: 15rem;
+  }
+
+  .shape {
+    width: 15rem;
+    height: 15rem;
+    float: left;
+    -webkit-shape-outside: circle(50% at 50% 50%);
+    shape-outside: circle(50% at 50% 50%);
+    -webkit-clip-path: circle(50% at 50% 50%);
+    clip-path: circle(50% at 50% 50%);
+    transform: translateX(-3rem) skewX(12deg);
+    position: relative;
+  }
+
+  button {
+    border-radius: 5px 20px 5px;
+
+    .fa-comments,
+    .comment-count {
+      color: #fff;
+    }
+  }
+}
+
+@import "mobile";

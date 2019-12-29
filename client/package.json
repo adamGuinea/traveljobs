@@ -17,10 +17,10 @@
     "uuid": "^3.3.2"
   },
   "scripts": {
-    "watch:sass": "node-sass ./src/scss/style.scss ./src/css/style.min.css -w",
+    "watch:sass": "node-sass ./src/scss/main.scss ./src/css/style.min.css -w",
     "devserver": "live-server",
     "startcss": "npm-run-all --parallel devserver watch:sass",
-    "compile:sass": "node-sass ./src/scss/style.scss ./src/css/comp.css",
+    "compile:sass": "node-sass ./src/scss/main.scss ./src/css/comp.css",
     "concat:css": "concat -o ./src/css/concat.css ./src/css/comp.css",
     "prefix:css": "postcss --use autoprefixer -b 'last 5 versions' ./src/css/concat.css -o ./src/css/prefix.css",
     "compress:css": "node-sass ./src/css/prefix.css ./src/css/style.min.css -output-style compressed",

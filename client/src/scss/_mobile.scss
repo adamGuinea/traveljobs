@@ -31,10 +31,13 @@
     ul {
       text-align: center;
       justify-content: center;
+      align-items: center;
     }
 
     h1 {
       margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
     }
   }
 
