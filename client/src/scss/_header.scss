@@ -30,7 +30,6 @@
   }
 
   &__logo {
-    // font-size: 2rem;
     margin-top: 4rem;
     color: #fff;
     justify-self: center;
@@ -39,6 +38,7 @@
   &__btn {
     align-self: start;
     justify-self: start;
+    border-radius: 5px;
   }
 
   &__seenon-text {
