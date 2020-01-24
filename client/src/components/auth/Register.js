@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { setAlert } from "../../actions/alert";
@@ -12,6 +12,36 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     password: "",
     password2: ""
   });
+
+  useEffect(() => {
+    nameRef.current.focus();
+  }, []);
+
+  const nameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const password2Ref = useRef();
+  const registerRef = useRef();
+
+  const sendKeyDown = (e, type) => {
+    const key = e.key;
+    switch (type) {
+      case "name":
+        if (key === "Enter") emailRef.current.focus();
+        break;
+      case "email":
+        if (key === "Enter") passwordRef.current.focus();
+        break;
+      case "password":
+        if (key === " Enter") password2Ref.current.focus();
+        break;
+      case "password2":
+        if (key === "Enter") registerRef.current.focus();
+        break;
+      default:
+        break;
+    }
+  };
 
   const { name, email, password, password2 } = formData;
 
@@ -28,66 +58,79 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign up</h1>
-      <p className='lead'>
-        <i className='fas fa-user' /> Create your account
+      <h1 className="large text-primary">Sign up</h1>
+      <p className="lead">
+        <i className="fas fa-user" /> Create your account
       </p>
-      <form className='form' onSubmit={e => onSubmit(e)}>
-        <div className='form-group'>
+      <form className="form" onSubmit={e => onSubmit(e)}>
+        <div className="form-group">
           <input
-            type='text'
-            placeholder='name'
-            name='name'
+            type="text"
+            placeholder="name"
+            name="name"
             value={name}
+            ref={nameRef}
+            onKeyDown={e => sendKeyDown(e, "name")}
             onChange={e => onChange(e)}
             required
           />
         </div>
-        <div className='form-group'>
+        <div className="form-group">
           <input
-            type='email'
-            placeholder='email'
-            name='email'
+            type="email"
+            placeholder="email"
+            name="email"
             value={email}
+            ref={emailRef}
+            onKeyDown={e => sendKeyDown(e, "email")}
             onChange={e => onChange(e)}
             required
           />
-          <small className='form-text'>
+          <small className="form-text">
             This site uses Gravatar, so if you want a profile image, use a
             Gravatar email.
           </small>
         </div>
-        <div className='form-group'>
+        <div className="form-group">
           <input
-            type='password'
-            placeholder='password'
-            name='password'
+            type="password"
+            placeholder="password"
+            name="password"
             value={password}
+            ref={passwordRef}
+            onKeyDown={e => sendKeyDown(e, "password")}
             onChange={e => onChange(e)}
-            minLength='8'
+            minLength="8"
             required
           />
         </div>
-        <div className='form-group'>
+        <div className="form-group">
           <input
-            type='password'
-            placeholder='confirm password'
-            name='password2'
+            type="password"
+            placeholder="confirm password"
+            name="password2"
             value={password2}
+            ref={password2Ref}
+            onKeyDown={e => sendKeyDown(e, "password2")}
             onChange={e => onChange(e)}
-            minLength='8'
+            minLength="8"
             required
           />
         </div>
-        <input type='submit' value='register' className='btn btn-primary' />
+        <input
+          type="submit"
+          ref={registerRef}
+          value="register"
+          className="btn btn-primary"
+        />
       </form>
-      <p className='my-1'>
-        Already have an account? <Link to='/login'>Sign in</Link>
+      <p className="my-1">
+        Already have an account? <Link to="/login">Sign in</Link>
       </p>
     </Fragment>
   );
@@ -103,7 +146,4 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(
-  mapStateToProps,
-  { setAlert, register }
-)(Register);
+export default connect(mapStateToProps, { setAlert, register })(Register);

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect, useRef } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -10,9 +10,13 @@ const Login = ({ login, isAuthenticated }) => {
     password: ""
   });
 
-  if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
-  }
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
+
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const submitRef = useRef();
 
   const { email, password } = formData;
 
@@ -24,38 +28,65 @@ const Login = ({ login, isAuthenticated }) => {
     login(email, password);
   };
 
+  const sendKeyDown = (e, type) => {
+    const key = e.key;
+    switch (type) {
+      case "email":
+        if (key === "Enter") passwordRef.current.focus();
+        break;
+      case "password":
+        if (key === "Enter") submitRef.current.focus();
+        break;
+      default:
+        break;
+    }
+  };
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign in</h1>
-      <p className='lead'>
-        <i className='fas fa-user' /> Sign in to your account
+      <h1 className="large text-primary">Sign in</h1>
+      <p className="lead">
+        <i className="fas fa-user" /> Sign in to your account
       </p>
-      <form className='form' onSubmit={e => onSubmit(e)}>
-        <div className='form-group'>
+      <form className="form" onSubmit={e => onSubmit(e)}>
+        <div className="form-group">
           <input
-            type='email'
-            placeholder='email'
-            name='email'
+            type="email"
+            placeholder="email"
+            name="email"
+            ref={emailRef}
+            onKeyDown={e => sendKeyDown(e, "email")}
             value={email}
             onChange={e => onChange(e)}
             required
           />{" "}
         </div>
-        <div className='form-group'>
+        <div className="form-group">
           <input
-            type='password'
-            placeholder='password'
-            name='password'
+            type="password"
+            placeholder="password"
+            name="password"
+            ref={passwordRef}
+            onKeyDown={e => sendKeyDown(e, "password")}
             value={password}
             onChange={e => onChange(e)}
-            minLength='8'
+            minLength="8"
             required
           />{" "}
         </div>
-        <input type='submit' value='login' className='btn btn-primary' />
+        <input
+          type="submit"
+          ref={submitRef}
+          value="login"
+          className="btn btn-primary"
+        />
       </form>
-      <p className='my-1'>
-        Don't have an account? <Link to='/register'>Sign up</Link>
+      <p className="my-1">
+        Don't have an account? <Link to="/register">Sign up</Link>
       </p>
     </Fragment>
   );
@@ -70,7 +101,4 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(
-  mapStateToProps,
-  { login }
-)(Login);
+export default connect(mapStateToProps, { login })(Login);
