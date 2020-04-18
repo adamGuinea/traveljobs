@@ -30,6 +30,10 @@
 
   input[type="submit"] {
     font: inherit;
+
+    &:focus {
+      background-color: $blue;
+    }
   }
 
   .social-input {
