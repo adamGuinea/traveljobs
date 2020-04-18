@@ -1,37 +1,18 @@
 const express = require("express");
-const request = require("request");
-const config = require("config");
 const router = express.Router();
 const auth = require("../../middleware/auth");
 const { check, validationResult } = require("express-validator/check");
-
 const Profile = require("../../models/Profile");
-const User = require("../../models/User");
-const Post = require("../../models/Post");
+const profileController = require('../../controllers/profileController')
 
 // GET to api/profile/me
 // DESC display current users profile
 // ACCESS private
-router.get("/me", auth, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id }).populate(
-      "user",
-      ["name", "avatar"]
-    );
+router.get("/me", auth, profileController.getUserProfile);
+// // POST to api/profile/
+// // DESC create or update user profile
+// // ACCESS private
 
-    if (!profile) {
-      return res.status(400).json({ msg: "There is no profile for this user" });
-    }
-    res.json(profile);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
-// POST to api/profile/
-// DESC create or update user profile
-// ACCESS private
 router.post(
   "/",
   [
@@ -100,59 +81,22 @@ router.post(
 // GET to api/profile/
 // DESC get all profiles
 // ACCESS public
-
-router.get("/", async (req, res) => {
-  try {
-    const profiles = await Profile.find().populate("user", ["name", "avatar"]);
-    res.json(profiles);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
+router.get("/", profileController.getProfiles);
 
 // GET to api/profile/user/:user_id
 // DESC get singular profile by ID
 // ACCESS public
 
-router.get("/user/:user_id", async (req, res) => {
-  try {
-    const profile = await Profile.findOne({
-      user: req.params.user_id
-    }).populate("user", ["name", "avatar"]);
-
-    if (!profile) return res.status(400).json({ msg: "Profile not found" });
-
-    res.json(profile);
-  } catch (err) {
-    console.error(err.message);
-    if (err.kind == "ObjectId") {
-      return res.status(400).json({ msg: "Profile not found" });
-    }
-    res.status(500).send("Server Error");
-  }
-});
-
+router.get("/user/:user_id", profileController.getUserProfileById);
 // DELETE to api/profile/
 // DESC delete profile/user and post
 // ACCESS private
 
-router.delete("/", auth, async (req, res) => {
-  try {
-    await Post.deleteMany({ user: req.user.id });
-    await Profile.findOneAndRemove({ user: req.user.id });
-    await User.findOneAndRemove({ _id: req.user.id });
-    res.json({ msg: "User deleted" });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
+router.delete("/", auth, profileController.deleteProfileUserAndPosts);
 
 // PUT to api/profile/experience
 // DESC add profile experience
 // ACCESS private
-
 router.put(
   "/experience",
   [
@@ -210,27 +154,11 @@ router.put(
 // DELETE to api/profile/experience/:exp_id
 // DESC delete profile experience
 // ACCESS private
-
-router.delete("/experience/:exp_id", auth, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id });
-    const removeIndex = profile.experience
-      .map(item => item.id)
-      .indexOf(req.params.exp_id);
-
-    profile.experience.splice(removeIndex, 1);
-    await profile.save();
-    res.json(profile);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-});
+router.delete("/experience/:exp_id", auth, profileController.deleteProfileExperience);
 
 // PUT to api/profile/eduction
 // DESC add profile eduction
 // ACCESS private
-
 router.put(
   "/education",
   [
@@ -291,50 +219,11 @@ router.put(
 // DELETE to api/profile/education/:edu_id
 // DESC delete profile education
 // ACCESS private
-
-router.delete("/education/:edu_id", auth, async (req, res) => {
-  try {
-    const profile = await Profile.findOne({ user: req.user.id });
-    const removeIndex = profile.education
-      .map(item => item.id)
-      .indexOf(req.params.edu_id);
-
-    profile.education.splice(removeIndex, 1);
-    await profile.save();
-    res.json(profile);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-});
+router.delete("/education/:edu_id", auth, profileController.deleteProfileEducation);
 
 // GET to api/profile/github/:username
 // DESC get user repos from github
 // ACCESS public
-
-router.get("/github/:username", (req, res) => {
-  try {
-    const options = {
-      uri: `https://api.github.com/users/${
-        req.params.username
-      }/repos?per_page=5&sort=created:asc&client_id=${config.get(
-        "githubClientID"
-      )}&client_secret=${config.get("githubSecret")}`,
-      method: "GET",
-      headers: { "user-agent": "node.js" }
-    };
-
-    request(options, (error, response, body) => {
-      if (error) console.error(error);
-      if (response.statusCode !== 200) {
-        return res.status(404).json({ msg: "No github profile found" });
-      }
-      res.json(JSON.parse(body));
-    });
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server Error");
-  }
-});
+router.get("/github/:username", profileController.getUserGithubRepos);
 
 module.exports = router;
