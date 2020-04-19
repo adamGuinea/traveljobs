@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { check } = require("express-validator/check");
+const { check, validationResult } = require("express-validator/check");
 const request = require("request");
 const config = require("config");
 const auth = require("../middleware/auth");
+const Profile = require('../models/Profile');
 
 /**
  * @route   GET api/profile/me
@@ -32,18 +33,7 @@ module.exports.getUserProfile = async (req, res) => {
  * @desc    Create or update user profile
  * @access  Private
  */
-
-module.exports.createOrUpdateProfile = [
-  auth,
-  [
-    check("status", "Status is required")
-      .not()
-      .isEmpty(),
-    check("skills", "Skills are required")
-      .not()
-      .isEmpty()
-  ]
-], async (req, res) => {
+module.exports.createOrUpdateProfile = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -94,13 +84,11 @@ module.exports.createOrUpdateProfile = [
   }
 }
 
-
 /**
  * @route   GET api/profile
  * @desc    Get all profiles
  * @access  Public
  */
-
 module.exports.getProfiles = async (_req, res) => {
   try {
     const profiles = await Profile.find().populate("user", ["name", "avatar"]);
@@ -116,7 +104,6 @@ module.exports.getProfiles = async (_req, res) => {
  * @desc    Get user profile by id
  * @access  Public
  */
-
 module.exports.getUserProfileById = async (req, res) => {
   try {
     const profile = await Profile.findOne({
@@ -140,7 +127,6 @@ module.exports.getUserProfileById = async (req, res) => {
  * @desc    Delete profile, user & posts for currently registered user
  * @access  Private
  */
-
 module.exports.deleteProfileUserAndPosts = async (req, res) => {
   try {
     await Post.deleteMany({ user: req.user.id });
@@ -158,24 +144,42 @@ module.exports.deleteProfileUserAndPosts = async (req, res) => {
  * @desc    Add profile experience of currently registered user
  * @access  Private
  */
-router.put(
-  "/experience",
-  [
-    auth,
-    [
-      check("title", "Title is required")
-        .not()
-        .isEmpty(),
-      check("company", "Company is required")
-        .not()
-        .isEmpty(),
-      check("from", "From date is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
-  // profileController.addProfileExperience
-);
+module.exports.addProfileExperience = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const {
+    title,
+    company,
+    location,
+    from,
+    to,
+    current,
+    description
+  } = req.body;
+
+  const newExp = {
+    title,
+    company,
+    location,
+    from,
+    to,
+    current,
+    description
+  };
+
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+    profile.experience.unshift(newExp);
+    await profile.save();
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+};
 
 /**
  * @route   DELETE api/profile/experience/:experienceId
@@ -203,27 +207,42 @@ module.exports.deleteProfileExperience = async (req, res) => {
  * @desc    Add profile education of currently registered user
  * @access  Private
  */
-router.put(
-  "/education",
-  [
-    auth,
-    [
-      check("school", "School is required")
-        .not()
-        .isEmpty(),
-      check("degree", "Degree is required")
-        .not()
-        .isEmpty(),
-      check("fieldofstudy", "Field of study is required")
-        .not()
-        .isEmpty(),
-      check("from", "From date is required")
-        .not()
-        .isEmpty()
-    ]
-  ],
-  // profileController.addProfileEducation
-);
+module.exports.addProfileEducation = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  const {
+    school,
+    degree,
+    fieldofstudy,
+    from,
+    to,
+    current,
+    description
+  } = req.body;
+
+  const newEdu = {
+    school,
+    degree,
+    fieldofstudy,
+    from,
+    to,
+    current,
+    description
+  };
+
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+
+    profile.education.unshift(newEdu);
+    await profile.save();
+    res.json(profile);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server Error");
+  }
+};
 
 /**
  * @route   DELETE api/profile/education/:educationId
@@ -276,4 +295,3 @@ module.exports.getUserGithubRepos = (req, res) => {
   }
 }
 
-// module.exports = router;
